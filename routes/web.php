@@ -4,7 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MaterialController;
-use App\Http\Controllers\BugdetController;
+use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\ProfessionalController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -54,13 +54,13 @@ Route::middleware('auth')->group(function () {
 
 
     //Routes of bugdet
-    Route::get('/bugdets', [BugdetController::class, 'index'])->name('bugdets.index');
-    Route::get('/bugdets/create', [BugdetController::class, 'create'])->name('bugdets.create');
-    Route::post('/bugdets', [BugdetController::class, 'store'])->name('bugdets.store');
-    Route::get('/bugdets/{bugdet}', [BugdetController::class, 'show'])->name('bugdets.show');
-    Route::get('/bugdets/{bugdet}/edit', [BugdetController::class, 'edit'])->name('bugdets.edit');
-    Route::put('/bugdets/{bugdet}', [BugdetController::class, 'update'])->name('bugdets.update');
-    Route::delete('/bugdets/{bugdet}', [BugdetController::class, 'destroy'])->name('bugdets.destroy');
+    Route::get('/budgets', [BudgetController::class, 'index'])->name('budgets.index');
+    Route::get('/budgets/create', [BudgetController::class, 'create'])->name('budgets.create');
+    Route::post('/budgets', [BudgetController::class, 'store'])->name('budgets.store');
+    Route::get('/budgets/{bugdet}', [BudgetController::class, 'show'])->name('budgets.show');
+    Route::get('/budgets/{bugdet}/edit', [BudgetController::class, 'edit'])->name('budgets.edit');
+    Route::put('/budgets/{bugdet}', [BudgetController::class, 'update'])->name('budgets.update');
+    Route::delete('/budgets/{bugdet}', [BudgetController::class, 'destroy'])->name('budgets.destroy');
 
 
     //Routes of professionals
