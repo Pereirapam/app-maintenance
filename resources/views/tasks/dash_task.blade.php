@@ -12,6 +12,11 @@
                     <p>Você está na parte de tarefas!</p>
 
 
+                        @if (session()->has('success'))
+                        
+                        {{ session('success') }}
+                            
+                        @endif
 
 
 
