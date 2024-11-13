@@ -47,7 +47,7 @@
                                 <td class="border border-slate-700">{{ $task->idCategory }}</td>
                                 <td class="border border-slate-700">
                                     <a href="">[delete]</a>
-                                    <a href="">[update]</a>
+                                    <a href="{{route('tasks.edit', $task->id)}}">[update]</a>
                                 </td>
                             </tr>
                             @empty

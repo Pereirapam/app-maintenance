@@ -18,6 +18,7 @@ class TaskController extends Controller
 
     public function index()
     {
+
         $tasks = $this->task->all();
         return view('tasks.dash_task', ['tasks' => $tasks]);
     }
@@ -41,6 +42,30 @@ class TaskController extends Controller
         Task::create($request->all());
 
         return redirect()->route('tasks.index')->with('success', 'Task created with success');
+    }
+
+    public function edit(string $id)
+    {
+        // $task = Task::where('id', '=', $id)->first();
+        // $task = Task::where('id', $id)->first();
+        $categories = Category::all();
+        if(!$task = Task::find($id)){
+            return redirect()->route('tasks.index')->with('message', 'task not found');
+        }
+        return view('tasks.updateTask', compact('task', 'categories'));
+    }
+
+    public function update(Request $request, string $id)
+    {
+        if(!$task = Task::find($id)){
+            return back()->with('message', 'task not found');
+        }
+
+        $task->update($request->only([
+            'descrption'
+        ]));
+
+        return redirect()->route('tasks.index')->with('success', 'Task edited successfully');
     }
 
 
