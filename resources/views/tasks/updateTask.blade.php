@@ -11,13 +11,13 @@
                 <div class="p-6 text-gray-900">
                     <p>Edit the task {{$task->description}}</p>
 
-                    <!-- @if ($errors->any())
+                    @if ($errors->any())
                     <ul>
                         @foreach ($errors->all() as $error) 
                         <li>{{ $error }}</li>
                         @endforeach
                     </ul>
-                    @endif -->
+                    @endif
 
                     <div>
                         <form action="{{ route('tasks.update', $task->id) }}" method="POST">
@@ -25,15 +25,6 @@
                             @method('put')
                             <label for="description">Descrição</label>
                             <input type="text" name="description" id="description" value="{{ $task->description }}">
-
-                            <label for="frequency">Frequência</label>
-                            <select name="frequency" id="frequency">
-                                <option value="mensal">Mensal</option>
-                                <option value="anual">Anual</option>
-                            </select>
-                            <label for="lastPerformed">Última visita</label>
-                            <input type="date" name="lastPerformed" id="lastPerformed" value="{{ old('lastPerformed', $task->lastPerformed)}}>
-
                             <label for="idCategory">Categoria</label>
                             <select name="idCategory" id="idCategory">
                                 @forelse ($categories as $category)

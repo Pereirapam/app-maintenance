@@ -8,7 +8,7 @@ class Task extends Model
 {
     protected $table = 'tasks';
 
-    protected $fillable = ['idCategory', 'description', 'frequency', 'lastPerformed'];
+    protected $fillable = ['idCategory', 'description', 'frequency'];
 
     
 }

@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Http\Requests\UpdateTask;
 use App\Http\Requests\StoreTask;
 use App\Models\Category;
 use App\Models\Task;
 use Illuminate\Http\Request;
 
+
+
 class TaskController extends Controller
 {
-    protected $task;
+
+    public readonly Task $task;
 
     public function __construct() 
     {
@@ -31,46 +36,54 @@ class TaskController extends Controller
 
     public function store(StoreTask $request)
     {
+
+       
+
+        $created = $this->task->create([
+            'description' => $request->input('description'),
+            'idCategory' => $request->input('idCategory'),
+            
+        ]);
         
-        // Task::create([
-        //     'idCategory' => $request->idCategory,
-        //     'description' => $request->description,
-        //     'frequency' => $request->frequency,
-        //     'lastPerformed' => \Carbon\Carbon::parse($request->lastPerformed)->format('Y-m-d'),
-        // ]);
+        if($created){
+            return redirect()->route('tasks.index')->with('message', 'Task criada com sucesso');
+        }
 
-        Task::create($request->all());
+        return redirect()->route('tasks.index')->with('message', 'Erro! Task não criada');
+       
 
-        return redirect()->route('tasks.index')->with('success', 'Task created with success');
     }
 
     public function edit(string $id)
     {
-        // $task = Task::where('id', '=', $id)->first();
-        // $task = Task::where('id', $id)->first();
+      
         $categories = Category::all();
         if(!$task = Task::find($id)){
-            return redirect()->route('tasks.index')->with('message', 'task not found');
+            return redirect()->route('tasks.index')->with('message', 'task não encontrada');
         }
         return view('tasks.updateTask', compact('task', 'categories'));
     }
 
-    public function update(Request $request, string $id)
+    public function update(UpdateTask $request, string $id)
     {
-        if(!$task = Task::find($id)){
-            return back()->with('message', 'task not found');
+        
+        $updated = $this->task->where('id', $id)->update($request->except(['_token', '_method']));
+        if ($updated) {
+            return redirect()->route('tasks.index')->with('message', 'Atualizado com sucesso');
         }
-
-        $task->update($request->only([
-            'descrption'
-        ]));
-
-        return redirect()->route('tasks.index')->with('success', 'Task edited successfully');
+        
     }
-
+    
 
     public function show(Task $task)
     {
-        return view('tasks.show', ['task' => $task]);
+        return view('tasks.showTask', ['task' => $task]);
+    }
+
+    public function destroy(string $id)
+    {
+        $this->task->where('id', $id)->delete();
+
+        return redirect()->route('tasks.index')->with('message', 'Excluído com sucesso');
     }
 }

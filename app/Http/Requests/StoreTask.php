@@ -23,10 +23,11 @@ class StoreTask extends FormRequest
     public function rules(): array
     {
         return [
+            
             'idCategory' => 'required|integer',
             'description' => 'required|string|max:255',
-            'frequency' => 'required|in:mensal,anual',
-            'lastPerformed' => 'required|date',
+            
+           
         ];
     }
 }

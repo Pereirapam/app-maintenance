@@ -12,9 +12,9 @@
                     <p>Você está na parte de tarefas!</p>
 
 
-                        @if (session()->has('success'))
+                        @if (session()->has('message'))
                         
-                        {{ session('success') }}
+                        {{ session('message') }}
                             
                         @endif
 
@@ -29,9 +29,8 @@
                     <table class="table-fixed min-w-full border-collapse border border-slate-500    ">
                         <thead>
                             <tr>
+                              
                                 <th class="border border-slate-600">Description</th>
-                                <th class="border border-slate-600">Frequency</th>
-                                <th class="border border-slate-600">LastPerformed</th>
                                 <th class="border border-slate-600">idCategory</th>
                                 <th class="border border-slate-600">Action</th>
 
@@ -41,12 +40,11 @@
                         <tbody>
                             @forelse ($tasks as $task)
                             <tr>
+                             
                                 <td class="border border-slate-700">{{ $task->description }}</td>
-                                <td class="border border-slate-700">{{ $task->frequency }}</td>
-                                <td class="border border-slate-700">{{ $task->lastPerformed }}</td>
                                 <td class="border border-slate-700">{{ $task->idCategory }}</td>
                                 <td class="border border-slate-700">
-                                    <a href="">[delete]</a>
+                                    <a href="{{route('tasks.show', $task->id)}}">[show]</a>
                                     <a href="{{route('tasks.edit', $task->id)}}">[update]</a>
                                 </td>
                             </tr>

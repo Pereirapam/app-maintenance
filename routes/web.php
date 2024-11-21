@@ -3,9 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\MaterialController;
-use App\Http\Controllers\BudgetController;
-use App\Http\Controllers\ProfessionalController;
+use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -43,34 +41,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 
 
-    //Routes of material
-    Route::get('/materials', [MaterialController::class, 'index'])->name('materials.index');
-    Route::get('/materials/create', [MaterialController::class, 'create'])->name('materials.create');
-    Route::post('/materials', [MaterialController::class, 'store'])->name('materials.store');
-    Route::get('/materials/{material}', [MaterialController::class, 'show'])->name('materials.show');
-    Route::get('/materials/{material}/edit', [MaterialController::class, 'edit'])->name('materials.edit');
-    Route::put('/materials/{material}', [MaterialController::class, 'update'])->name('materials.update');
-    Route::delete('/materials/{material}', [MaterialController::class, 'destroy'])->name('materials.destroy');
-
-
-    //Routes of bugdet
-    Route::get('/budgets', [BudgetController::class, 'index'])->name('budgets.index');
-    Route::get('/budgets/create', [BudgetController::class, 'create'])->name('budgets.create');
-    Route::post('/budgets', [BudgetController::class, 'store'])->name('budgets.store');
-    Route::get('/budgets/{bugdet}', [BudgetController::class, 'show'])->name('budgets.show');
-    Route::get('/budgets/{bugdet}/edit', [BudgetController::class, 'edit'])->name('budgets.edit');
-    Route::put('/budgets/{bugdet}', [BudgetController::class, 'update'])->name('budgets.update');
-    Route::delete('/budgets/{bugdet}', [BudgetController::class, 'destroy'])->name('budgets.destroy');
-
-
     //Routes of professionals
-    Route::get('/professionals', [ProfessionalController::class, 'index'])->name('professionals.index');
-    Route::get('/professionals/create', [ProfessionalController::class, 'create'])->name('professionals.create');
-    Route::post('/professionals', [ProfessionalController::class, 'store'])->name('professionals.store');
-    Route::get('/professionals/{professional}', [ProfessionalController::class, 'show'])->name('professionals.show');
-    Route::get('/professionals/{professional}/edit', [ProfessionalController::class, 'edit'])->name('professionals.edit');
-    Route::put('/professionals/{professional}', [ProfessionalController::class, 'update'])->name('professionals.update');
-    Route::delete('/professionals/{professional}', [ProfessionalController::class, 'destroy'])->name('professionals.destroy');
+    Route::get('/providers', [ProviderController::class, 'index'])->name('providers.index');
+    Route::get('/providers/create', [ProviderController::class, 'create'])->name('providers.create');
+    Route::post('/providers', [ProviderController::class, 'store'])->name('providers.store');
+    Route::get('/providers/{provider}', [ProviderController::class, 'show'])->name('providers.show');
+    Route::get('/providers/{provider}/edit', [ProviderController::class, 'edit'])->name('providers.edit');
+    Route::put('/providers/{provider}', [ProviderController::class, 'update'])->name('providers.update');
+    Route::delete('/providers/{provider}', [ProviderController::class, 'destroy'])->name('providers.destroy');
 });
 
 require __DIR__ . '/auth.php';

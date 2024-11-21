@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <p>New task</p>
+                    <p>Nova task</p>
 
                     @if ($errors->any())
                     <ul>
@@ -22,17 +22,9 @@
                     <div>
                         <form action="{{ route('tasks.store') }}" method="POST">
                             @csrf
+                        
                             <label for="description">Descrição</label>
                             <input type="text" name="description" id="description" value="{{old('description')}}">
-
-                            <label for="frequency">Frequência</label>
-                            <select name="frequency" id="frequency">
-                                <option value="mensal">Mensal</option>
-                                <option value="anual">Anual</option>
-                            </select>
-                            <label for="lastPerformed">Última visita</label>
-                            <input type="date" name="lastPerformed" id="lastPerformed">
-
                             <label for="idCategory">Categoria</label>
                             <select name="idCategory" id="idCategory">
                                 @forelse ($categories as $category)
