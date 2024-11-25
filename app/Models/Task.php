@@ -2,13 +2,22 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
-    protected $table = 'tasks';
-
-    protected $fillable = ['idCategory', 'description', 'frequency'];
-
     
+    use HasFactory;
+    
+    protected $fillable = [
+        'idCategory',
+        'description'
+    ];
+    
+    public function category()
+{
+    return $this->belongsTo(Category::class, 'idCategory');
+}
+
 }

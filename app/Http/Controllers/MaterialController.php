@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Material;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreMaterial;
+
 
 class MaterialController extends Controller
 {
      
-    public readonly material $material;
+    public $material;
 
     public function __construct() 
     {
@@ -19,7 +21,7 @@ class MaterialController extends Controller
     {
 
         $materials = $this->material->all();
-        return view('materials.dashmaterial', ['material' => $materials]);
+        return view('materials.dashmaterial', ['materials' => $materials]);
     }
 
     public function create()
@@ -28,22 +30,23 @@ class MaterialController extends Controller
         return view('materials.createMaterial');
     }
 
-    public function store(StoreTask $request)
+    public function store(StoreMaterial $request)
     {
 
        
 
         $created = $this->material->create([
-            'description' => $request->input('description'),
-            'idCategory' => $request->input('idCategory'),
+            'name' => $request->input('name'),
+            'supplier' => $request->input('supplier'),
+            'estimated_cost' => $request->input('estimated_cost'),
             
         ]);
         
         if($created){
-            return redirect()->route('materials.index')->with('message', 'Task criada com sucesso');
+            return redirect()->route('materials.index')->with('message', 'Material criado com sucesso');
         }
 
-        return redirect()->route('materials.index')->with('message', 'Erro! Task não criada');
+        return redirect()->route('materials.index')->with('message', 'Erro! Material não criada');
        
 
     }
@@ -53,12 +56,12 @@ class MaterialController extends Controller
       
         // $categories = Category::all();
         if(!$material = Material::find($id)){
-            return redirect()->route('materials.index')->with('message', 'task não encontrada');
+            return redirect()->route('materials.index')->with('message', 'Material não encontrada');
         }
-        return view('materials.updateMaterial', compact('task', 'categories'));
+        return view('materials.updateMaterial', compact('material'));
     }
 
-    public function update(UpdateTask $request, string $id)
+    public function update(StoreMaterial $request, string $id)
     {
         
         $updated = $this->material->where('id', $id)->update($request->except(['_token', '_method']));
@@ -69,7 +72,7 @@ class MaterialController extends Controller
     }
     
 
-    public function show(material $Material)
+    public function show(Material $Material)
     {
         return view('materials.showMaterial', ['material' => $material]);
     }

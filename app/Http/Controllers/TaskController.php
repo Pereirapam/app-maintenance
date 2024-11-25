@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 
-use App\Http\Requests\UpdateTask;
+
 use App\Http\Requests\StoreTask;
 use App\Models\Category;
 use App\Models\Task;
@@ -25,6 +25,7 @@ class TaskController extends Controller
     {
 
         $tasks = $this->task->all();
+        
         return view('tasks.dash_task', ['tasks' => $tasks]);
     }
 
@@ -64,7 +65,7 @@ class TaskController extends Controller
         return view('tasks.updateTask', compact('task', 'categories'));
     }
 
-    public function update(UpdateTask $request, string $id)
+    public function update(StoreTask $request, string $id)
     {
         
         $updated = $this->task->where('id', $id)->update($request->except(['_token', '_method']));

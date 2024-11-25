@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Tasks') }}
+            {{ __('Tarefas') }}
         </h2>
     </x-slot>
 
@@ -9,52 +9,67 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <p>Você está na parte de tarefas!</p>
+                    <h2 class="font-bold text-lg mb-4">Você está na parte de tarefas!</h2>
 
-
-                        @if (session()->has('message'))
-                        
+               
+                    @if (session()->has('message'))
+                    <div class="mb-4 p-4 text-green-700 bg-green-100 rounded-lg">
                         {{ session('message') }}
-                            
-                        @endif
+                    </div>
+                    @endif
 
+                    
+                    <div class="mb-8">
+                        <a href="{{route('tasks.create')}}">
+                            <button type="button" class="bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-800 transition duration-200">
+                                Nova tarefa
+                            </button>
+                        </a>
+                    </div>
 
+                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                        <table class="w-full text-sm text-left text-gray-500">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3">Descrição</th>
+                                    <th scope="col" class="px-6 py-3">Categoria</th>
+                                    <th scope="col" class="px-6 py-3">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($tasks as $task)
+                                <tr class="bg-white border-b hover:bg-gray-50">
+                                    <td class="px-6 py-4 font-medium text-gray-900">{{ $task->description }}</td>
+                                    <td class="px-6 py-4">{{ $task->idCategory }}</td>
+                                    <td class="px-6 py-4 flex gap-2">
+                                        
+                                        <a href="{{route('tasks.edit', $task->id)}}">
+                                            <button class="bg-yellow-500 text-white h-10 w-24 rounded-lg text-sm shadow-md hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-300">
+                                                Editar
+                                            </button>
+                                        </a>
 
-                    <a href="{{route('tasks.create')}}" class="">
-                        <button type="button" class="bg-indigo-300 text-white w-100 h-100 font-semibold mt-8 mb-8 py-2 px-4 rounded hover:bg-indigo-500 transition duration-200">
-                            Create new task
-                        </button>
-                    </a>
-
-                    <table class="table-fixed min-w-full border-collapse border border-slate-500    ">
-                        <thead>
-                            <tr>
-                              
-                                <th class="border border-slate-600">Description</th>
-                                <th class="border border-slate-600">idCategory</th>
-                                <th class="border border-slate-600">Action</th>
-
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($tasks as $task)
-                            <tr>
-                             
-                                <td class="border border-slate-700">{{ $task->description }}</td>
-                                <td class="border border-slate-700">{{ $task->idCategory }}</td>
-                                <td class="border border-slate-700">
-                                    <a href="{{route('tasks.show', $task->id)}}">[show]</a>
-                                    <a href="{{route('tasks.edit', $task->id)}}">[update]</a>
-                                </td>
-                            </tr>
-                            @empty
-                            <td>Não há tarefas para mostrar.</td>
-                            @endforelse($tasks as $task)
-                        </tbody>
-                    </table>
-
-
+                                       
+                                        <form action="{{route('tasks.destroy', $task->id)}}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="bg-red-500 text-white h-10 w-24 rounded-lg text-sm shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-300" type="submit">
+                                                Delete
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @empty
+                               
+                                <tr>
+                                    <td colspan="3" class="px-6 py-4 text-center text-gray-500">
+                                        Não há tarefas para mostrar.
+                                    </td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
 
                 </div>
             </div>

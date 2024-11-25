@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Provider;  
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreProvider;
+
 
 class ProviderController extends Controller
 {
@@ -18,7 +21,7 @@ class ProviderController extends Controller
     {
 
         $providers = $this->provider->all();
-        return view('providers.dashProvider', ['provider' => $providers]);
+        return view('providers.dashProvider', ['providers' => $providers]);
     }
 
     public function create()
@@ -27,22 +30,22 @@ class ProviderController extends Controller
         return view('providers.createProvider');
     }
 
-    public function store(StoreTask $request)
+    public function store(StoreProvider $request)
     {
 
        
 
         $created = $this->provider->create([
-            'description' => $request->input('description'),
-            'idCategory' => $request->input('idCategory'),
+            'name' => $request->input('name'),
+            'contact_info' => $request->input('contact_info'),
             
         ]);
         
         if($created){
-            return redirect()->route('providers.index')->with('message', 'Task criada com sucesso');
+            return redirect()->route('providers.index')->with('message', 'Fornecedor(a) criado(a) com sucesso');
         }
 
-        return redirect()->route('providers.index')->with('message', 'Erro! Task não criada');
+        return redirect()->route('providers.index')->with('message', 'Erro! Fornecedor(a) não criada');
        
 
     }
@@ -51,13 +54,13 @@ class ProviderController extends Controller
     {
       
         // $categories = Category::all();
-        if(!$task = Task::find($id)){
-            return redirect()->route('providers.index')->with('message', 'task não encontrada');
+        if(!$provider = Provider::find($id)){
+            return redirect()->route('providers.index')->with('message', 'Fornecedor(a) não encontrada');
         }
-        return view('providers.updateProvider', compact('task', 'categories'));
+        return view('providers.updateProvider', compact('provider'));
     }
 
-    public function update(UpdateTask $request, string $id)
+    public function update(StoreProvider $request, string $id)
     {
         
         $updated = $this->provider->where('id', $id)->update($request->except(['_token', '_method']));
@@ -68,10 +71,10 @@ class ProviderController extends Controller
     }
     
 
-    public function show(Provider $provider)
-    {
-        return view('providers.showProvider', ['provider' => $provider]);
-    }
+    // public function show(Provider $provider)
+    // {
+    //     return view('providers.showProvider', ['provider' => $provider]);
+    // }
 
     public function destroy(string $id)
     {

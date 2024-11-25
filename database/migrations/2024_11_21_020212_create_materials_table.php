@@ -17,8 +17,6 @@ return new class extends Migration
             $table->string('name'); 
             $table->string('supplier');
             $table->decimal('estimated_cost', 10, 2); 
-            $table->unsignedBigInteger('idTask');
-            $table->foreign('idTask')->references('id')->on('tasks')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps(false); 
         });
     }
